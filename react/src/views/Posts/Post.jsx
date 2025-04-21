@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import PrimaryButton from "components/PrimaryButton.jsx";
+import PrimaryButton from "components/PrimaryButton";
 import { useParams, useNavigate } from "react-router-dom"
-import { useStateContext } from "contexts/ContextProvider.jsx";
+import { useStateContext } from "contexts/ContextProvider";
 import axiosClient from "../../axios-client"
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Modal from "components/Modal";

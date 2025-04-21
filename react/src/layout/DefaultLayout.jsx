@@ -1,11 +1,11 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
-import { useStateContext } from "contexts/ContextProvider.jsx";
-import LogoDabadub from "assets/LogoDabadub.jsx";
+import { useStateContext } from "contexts/ContextProvider";
+import LogoDabadub from "assets/LogoDabadub";
 import axiosClient from "/src/axios-client.js";
-import DropdownMenu from "components/DropdownMenu.jsx";
+import DropdownMenu from "components/DropdownMenu";
 import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, HomeIcon, NewspaperIcon, UserGroupIcon, PlusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
-import PrimaryButton from "components/PrimaryButton.jsx";
+import PrimaryButton from "components/PrimaryButton";
 
 export default function DefaultLayout() {
 

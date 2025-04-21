@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import axiosClient from "../axios-client.js";
-import DabadubBox from "../assets/DabadubBox.jsx";
+import DabadubBox from "../assets/DabadubBox";
 import PrimaryButton from "components/PrimaryButton";
 import LogoDabadub from "/src/assets/LogoDabadub";
 

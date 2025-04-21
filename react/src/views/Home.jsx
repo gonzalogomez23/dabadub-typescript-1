@@ -1,4 +1,4 @@
-import PrimaryButton from "components/PrimaryButton.jsx";
+import PrimaryButton from "components/PrimaryButton";
 
 const Home = () => {
   return (

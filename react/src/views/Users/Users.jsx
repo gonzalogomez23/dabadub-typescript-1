@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "/src/axios-client.js";
-import { useStateContext } from "contexts/ContextProvider.jsx";
-import PrimaryButton from "components/PrimaryButton.jsx";
+import { useStateContext } from "contexts/ContextProvider";
+import PrimaryButton from "components/PrimaryButton";
 import { PlusIcon } from '@heroicons/react/24/solid'
 
 // Styles

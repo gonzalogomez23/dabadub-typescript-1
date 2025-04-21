@@ -1,4 +1,4 @@
-import { useStateContext } from "contexts/ContextProvider.jsx";
+import { useStateContext } from "contexts/ContextProvider";
 
 const App = ({ children }) => {
     const { notification } = useStateContext();
