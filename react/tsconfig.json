@@ -14,11 +14,17 @@
     "forceConsistentCasingInFileNames": true, // Enforce consistent casing in imports
     "baseUrl": ".",                           // Set the base directory
     "paths": {
+      "@/*": ["src/*"],  // Example alias for components
       "@components/*": ["src/components/*"],  // Example alias for components
-      "@utils/*": ["src/utils/*"]             // Example alias for utilities
+      "@assets/*": ["src/assets/*"], 
+      "@contexts/*": ["src/contexts/*"], 
+      "@views/*": ["src/views/*"], 
+      "@layout/*": ["src/layout/*"],
     },
     "allowSyntheticDefaultImports": true,     // Allow default imports for ES modules
-    "incremental": true                       // Enable incremental compilation
+    "incremental": true,                       // Enable incremental compilation
+    "outDir": "./dist",   // Specifies the output folder for the compiled JavaScript files
+    "rootDir": "./src",   // Specifies the root folder of the input TypeScript files
   },
   "include": ["src/**/*", "src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"], // Include all relevant files
   "exclude": ["node_modules", "dist"]        // Exclude dependencies and the build output

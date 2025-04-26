@@ -65,10 +65,11 @@ const DropdownMenu = ({ label, buttonIcon, children }: DropdownMenuProps) => {
   )
 }
 
+
 interface DropdownMenuItemProps {
-    children: ReactNode;
-    className?: string;
-    parentMethod?: () => void;
+  children: ReactNode;
+  className?: string;
+  parentMethod?: (ev: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 DropdownMenu.Item = ({children, className = '', parentMethod, ...props }: DropdownMenuItemProps) => {

@@ -1,22 +1,22 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
-import { useEffect } from "react";
-import { useStateContext } from "contexts/ContextProvider";
-import LogoDabadub from "assets/LogoDabadub";
-import axiosClient from "/src/axios-client.js";
-import DropdownMenu from "components/DropdownMenu";
-import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, HomeIcon, NewspaperIcon, UserGroupIcon, PlusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
-import PrimaryButton from "components/PrimaryButton";
+import { useEffect, MouseEvent } from "react";
+import { useStateContext } from "@contexts/ContextProvider";
+import LogoDabadub from "@assets/LogoDabadub";
+import axiosClient from "@/axios-client.js";
+import DropdownMenu from "@components/DropdownMenu";
+import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import PrimaryButton from "@components/PrimaryButton";
 
 export default function DefaultLayout() {
 
     const {user, setUser, token, setToken} = useStateContext()
 
-    const handleLogout = (ev) => {
+    const handleLogout = (ev: MouseEvent) => {
         ev.preventDefault()
 
         axiosClient.post('/logout')
             .then(() => {
-                setUser({})
+                setUser(null)
                 setToken(null)
             })
     }
@@ -47,7 +47,7 @@ export default function DefaultLayout() {
                                 <PencilSquareIcon className="size-5"/>
                             </PrimaryButton>
                             <DropdownMenu
-                                label={user.name}
+                                label={user?.name || ''}
                                 buttonIcon={(
                                     <UserCircleIcon className="size-6"/>
                                 )}
