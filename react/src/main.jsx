@@ -4,7 +4,7 @@ import App from './App'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
-import { ContextProvider } from './contexts/ContextProvider'
+import { ContextProvider } from '/src/contexts/ContextProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
         <ContextProvider>

@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import axiosClient from "../../axios-client";
 import { useNavigate } from "react-router-dom";
-import PrimaryButton from "components/PrimaryButton";
-import { useStateContext } from "contexts/ContextProvider";
+import PrimaryButton from "@components/PrimaryButton";
+import { useStateContext } from "@contexts/ContextProvider";
 
 const PostForm = () => {
     const navigate = useNavigate();

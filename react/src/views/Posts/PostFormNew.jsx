@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import PrimaryButton from "components/PrimaryButton";
-import axiosClient from "../../axios-client";
-import { useStateContext } from "contexts/ContextProvider";
+import PrimaryButton from "@components/PrimaryButton";
+import axiosClient from "@/axios-client";
+import { useStateContext } from "@contexts/ContextProvider";
 
 const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
 

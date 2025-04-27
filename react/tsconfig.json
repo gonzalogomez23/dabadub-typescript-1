@@ -12,10 +12,10 @@
     "skipLibCheck": true,                     // Skip type checking for declaration files
     "strict": true,                           // Enable strict type-checking options
     "forceConsistentCasingInFileNames": true, // Enforce consistent casing in imports
-    "baseUrl": ".",                           // Set the base directory
+    "baseUrl": "./",                           // Set the base directory
     "paths": {
-      "@/*": ["src/*"],  // Example alias for components
-      "@components/*": ["src/components/*"],  // Example alias for components
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],  // Alias for components
       "@assets/*": ["src/assets/*"], 
       "@contexts/*": ["src/contexts/*"], 
       "@views/*": ["src/views/*"], 

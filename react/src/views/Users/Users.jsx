@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axiosClient from "/src/axios-client.js";
-import { useStateContext } from "contexts/ContextProvider";
-import PrimaryButton from "components/PrimaryButton";
+import axiosClient from "@/axios-client.js";
+import { useStateContext } from "@contexts/ContextProvider";
+import PrimaryButton from "@components/PrimaryButton";
 import { PlusIcon } from '@heroicons/react/24/solid'
 
 // Styles
-import styles from 'views/Users/Users.module.css'
+import styles from '/src/views/Users/Users.module.css'
 
 export default function Users() {
 

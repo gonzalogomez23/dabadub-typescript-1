@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosClient from "/src/axios-client";
-import { useStateContext } from "contexts/ContextProvider";
-import LogoDabadub from "assets/LogoDabadub";
-import PrimaryButton from "components/PrimaryButton";
+import axiosClient from "@/axios-client";
+import { useStateContext } from "@contexts/ContextProvider";
+import LogoDabadub from "@assets/LogoDabadub";
+import PrimaryButton from "@components/PrimaryButton";
 
 export default function Signup() {
     

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axiosClient from "../../axios-client.js";
-import AsideLink from 'components/AsideLink';
+import axiosClient from "@/axios-client.js";
+import AsideLink from '/src/components/AsideLink';
 import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, NewspaperIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { Outlet } from "react-router-dom";
 

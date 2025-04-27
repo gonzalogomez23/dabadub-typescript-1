@@ -1,4 +1,4 @@
-import { useStateContext } from "contexts/ContextProvider";
+import { useStateContext } from "@contexts/ContextProvider";
 
 const App = ({ children }) => {
     const { notification } = useStateContext();
@@ -12,7 +12,7 @@ const App = ({ children }) => {
     return (
         <>
             {children}
-            {notification.message && (
+            {notification?.message && (
                 <div className="fixed top-0 left-0 w-screen flex justify-center p-8" role="alert">
                     <div className={`max-w-full border-2 rounded-lg px-6 py-3 ${notificationStyles[notification.type] || "text-gray-800 bg-gray-50 border-gray-700"}`}>
                         <span className="font-medium">{notification.message}</span>

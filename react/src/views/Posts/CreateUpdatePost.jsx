@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import axiosClient from "../../axios-client";
 import { useNavigate, Navigate } from "react-router-dom";
-import PrimaryButton from "components/PrimaryButton";
-import { useStateContext } from "contexts/ContextProvider";
-import PostFormNew from "views/Posts/PostFormNew";
+import PrimaryButton from "@components/PrimaryButton";
+import { useStateContext } from "@contexts/ContextProvider";
+import PostFormNew from "@views/Posts/PostFormNew";
 
 const CreateUpdatePost = () => {
     const { slug } = useParams();

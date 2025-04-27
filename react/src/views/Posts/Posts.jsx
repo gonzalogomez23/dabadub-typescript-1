@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import axiosClient from "/src/axios-client.js";
-import PostItem from 'components/PostItem';
-import PrimaryButton from "components/PrimaryButton";
+import axiosClient from "@/axios-client.js";
+import PostItem from '/src/components/PostItem';
+import PrimaryButton from "@components/PrimaryButton";
 
 const Posts = () => {
 
