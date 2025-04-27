@@ -1,4 +1,4 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useEffect, MouseEvent } from "react";
 import { useStateContext } from "@contexts/ContextProvider";
 import LogoDabadub from "@assets/LogoDabadub";
