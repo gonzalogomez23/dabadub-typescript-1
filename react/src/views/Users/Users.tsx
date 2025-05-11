@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axiosClient from "@/axios-client.js";
+import axiosClient from "@/axios-client";
 import { useStateContext } from "@contexts/ContextProvider";
 import PrimaryButton from "@components/PrimaryButton";
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { type User as UserType } from "@/types";
 
-// Styles
-import styles from '/src/views/Users/Users.module.css'
+import styles from "@views/Users/Users.module.css";
 
 export default function Users() {
 
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<UserType[]>([]);
     const [loading, setLoading] = useState(false);
     const {setNotification} = useStateContext()
 
@@ -18,14 +18,14 @@ export default function Users() {
         getUsers();
     }, [])
 
-    const onDelete = (u) => {
+    const onDelete = (id: number | string) => {
         if(!window.confirm("Are you sure you want to delete this user?")) {
             return
         }
 
-        axiosClient.delete(`/users/${u.id}`)
+        axiosClient.delete(`/users/${id}`)
             .then(() => {
-                setNotification('User was successfully deleted')
+                setNotification({message: 'User was successfully deleted', type: 'success'})
                 getUsers()
             })
     }
@@ -46,12 +46,14 @@ export default function Users() {
     <>
         <div className="flex justify-between items-end py-6">
             <h1 className="text-4xl text-primary font-semibold font-headings px-2">Users</h1>
-            <PrimaryButton to="/users/new" className="btn-add">
-                <PlusIcon className="size-5"/>
-                Add new
-            </PrimaryButton> 
+            <Link to="/users/new">
+                <PrimaryButton className="btn-add">
+                    <PlusIcon className="size-5"/>
+                    Add new
+                </PrimaryButton>
+            </Link>
         </div>
-        <div className="border border-border1 rounded-lg overflow-hidden bg-white shadow-sm">
+        <div className="border border-border1 rounded-lg overflow-hidden bg-white shadow-sm w-fit overflow-x-scroll">
             <table className={`${styles['users-table']}`}>
                 <thead className="text-gray-800 bg-gray-100">
                     <tr>
@@ -65,7 +67,7 @@ export default function Users() {
                 {loading &&
                 <tbody>
                     <tr>
-                        <td colSpan="5" className="text-center">
+                        <td colSpan={5} className="text-center">
                             Loading...
                         </td>
                     </tr>
@@ -73,18 +75,24 @@ export default function Users() {
                 }
                 {!loading &&
                 <tbody>
-                    {users.map(u => (
-                        <tr key={u.id}>
+                    {users.length > 0 ? (
+                        users.map(u => (
+                            <tr key={u.id}>
                             <td>{u.id}</td>
                             <td>{u.name}</td>
                             <td>{u.email}</td>
                             <td>{u.created_at}</td>
                             <td>
-                                <Link to={'/users/'+u.id} className="btn-edit">Edit</Link>
-                                <button onClick={en => onDelete(u)} className="btn-delete">Delete</button>
+                                <Link to={`/users/${u.id}`} className="btn-edit">Edit</Link>
+                                <button onClick={() => onDelete(u.id)} className="btn-delete">Delete</button>
                             </td>
+                            </tr>
+                        ))
+                        ) : (
+                        <tr>
+                            <td colSpan={5} style={{ textAlign: 'center' }}>No users found</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
                 }
             </table>

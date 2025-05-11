@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import axiosClient from "@/axios-client.js";
-import AsideLink from '/src/components/AsideLink';
-import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, NewspaperIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import axiosClient from "@/axios-client";
+import AsideLink from '@components/AsideLink';
 import { Outlet } from "react-router-dom";
+import { type PostCategory as CategoryType } from "@/types";
 
-const Posts = ({children}) => {
-    const [categories, setCategories] = useState([]);
+const Posts = () => {
+    const [categories, setCategories] = useState<CategoryType[]>([]);
     const [loadingCategories, setLoadingCategories] = useState(false);
 
     const getCategories = () => {
@@ -17,13 +17,13 @@ const Posts = ({children}) => {
             .catch((err) => {
                 const response = err.response;
                 if (response && response.status === 422) {
-                  setErrors(response.data.errors || { general: [response.data.message] });
+                  console.error(response.data.errors || { general: [response.data.message] });
                 } else {
                   console.error("Unexpected error:", response.data.error);
                 }
               })
             .finally(() => {
-            setLoadingCategories(false);
+                setLoadingCategories(false);
             });
     }
     
@@ -43,22 +43,14 @@ const Posts = ({children}) => {
                             <AsideLink
                                 to={`/posts/${category.slug}`}
                                 key={category.id}
-                                category={category}
                             >
                                 {category.title}
                             </AsideLink>
                         ))}
-                        {/* <AsideLink>
-                            <UserGroupIcon className="size-6 min-w-6"/>
-                            Comunity
-                        </AsideLink> */}
                     </div>
                 </div>
             </aside>
             <div className="content grow">
-                {/* <div className="flex justify-between items-end py-4 px-2">
-                    <h1 className="text-4xl text-primary font-semibold font-headings px-2">Posts</h1>
-                </div> */}
                 <div className="rounded-xl bg-white border border-primary/15 overflow-hidden">
                     <Outlet/>
                 </div>

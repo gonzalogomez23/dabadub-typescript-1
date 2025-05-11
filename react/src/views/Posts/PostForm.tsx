@@ -1,11 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PrimaryButton from "@components/PrimaryButton";
-import axiosClient from "@/axios-client";
-import { useStateContext } from "@contexts/ContextProvider";
+import {type PostCategory as CategoryType, type Post as PostType} from "@/types";
 
-const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
+interface PostFormProps {
+    initialValues: PostType;
+    onSubmit: (data: FormData | object) => void;
+    isUpdateMode?: boolean;
+    categories: CategoryType[];
+}
 
-    const [postData, setPostData] = useState({
+interface PostFormData {
+    title: string;
+    description: string;
+    content: string;
+    category_id: number | string | null;
+    published: boolean;
+    image?: string;
+    _method?: 'PUT';
+}
+
+const PostForm = ({initialValues, onSubmit, isUpdateMode, categories}: PostFormProps) => {
+
+    const [postData, setPostData] = useState<PostFormData>({
         title: initialValues.title ?? "",
         description: initialValues.description ?? "",
         content: initialValues.content ?? "",
@@ -14,21 +30,27 @@ const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
         ...(isUpdateMode && { _method: "PUT" })
     });
 
-    const [image, setImage] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [image, setImage] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
 
-    const handleFileSelect = (event) => {
+    const handleFileSelect = (
+        event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>
+    ) => {
         event.preventDefault();
-    
-        const file = event.target?.files?.[0] || event.dataTransfer?.files?.[0];
+
+        const file =
+            (event as React.ChangeEvent<HTMLInputElement>).target?.files?.[0] ||
+            (event as React.DragEvent<HTMLDivElement>).dataTransfer?.files?.[0];
+
         if (!file) return;
-    
+
         setImage(file);
         setPreview(URL.createObjectURL(file));
         setPostData(prevData => ({ ...prevData, image: file }));
     };
 
-    const handleBlur = (e) => {
+
+    const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setPostData((prev) => ({
           ...prev,
@@ -36,7 +58,7 @@ const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
         }));
     };
 
-    const handleCategory = (e) => {
+    const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value === "0" ? null : parseInt(e.target.value);
         setPostData((prev) => ({
             ...prev,
@@ -44,7 +66,7 @@ const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
         }));
     }
 
-    const handleSubmit = (ev) => {
+    const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         
         if (!image) return onSubmit(postData);
@@ -152,18 +174,6 @@ const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
                     ))}
                 </select>
             </div>
-
-            {/* <div className="flex items-center gap-2">
-                <input
-                    id="published"
-                    name="published"
-                    defaultValue={postData.published || true}
-                    onChange={ev => setPostData({...postData, published: ev.target.checked})}
-                    type="checkbox"
-                    defaultChecked={true}
-                />
-                <label htmlFor="published">Published</label>
-            </div> */}
             <PrimaryButton className="btn-add" type="submit">
                 Save
             </PrimaryButton>
@@ -171,4 +181,4 @@ const PostFormNew = ({initialValues, onSubmit, isUpdateMode, categories}) => {
     );
 };
 
-export default PostFormNew;
+export default PostForm;

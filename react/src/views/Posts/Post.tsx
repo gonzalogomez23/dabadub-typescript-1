@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import PrimaryButton from "@components/PrimaryButton";
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { useStateContext } from "@contexts/ContextProvider";
-import axiosClient from "../../axios-client"
+import axiosClient from "@/axios-client"
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Modal from "@components/Modal";
+import { Post as PostType } from "@/types";
 
 const Post = () => {
 
+    const {token, setNotification} = useStateContext()
     const {slug} = useParams()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    const {token, setNotification} = useStateContext()
     const [isDeleting, setIsDeleting] = useState(false)
 
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState<PostType | null>(null);
 
     if (slug) {
         useEffect(() => {
@@ -33,20 +34,25 @@ const Post = () => {
         }, [])
     }
 
-    const onDelete = (post) => {
+    const onDelete = (post: PostType) => {
         axiosClient.delete(`/posts/${post.slug}`)
             .then(() => {
-                setNotification("Post deleted successfully");
+                setNotification({message: 'Post deleted successfully'});
                 navigate("/posts");
             })
             .catch((err) => {
                 const response = err.response;
-                if (response?.status === 422) {
-                    setErrors(response.data.errors || { general: [response.data.message] });
+                if (response?.status === 404) {
+                    console.error("Post not found:", response.data.message);
+                    setNotification({ message: "Post not found", type: "error" });
+                } else if (response?.status === 403) {
+                    console.error("Not authorized to delete this post");
+                    setNotification({ message: "You are not allowed to delete this post", type: "error" });
                 } else {
                     console.error("Unexpected error:", response?.data || err.message);
+                    setNotification({ message: "Something went wrong", type: "error" });
                 }
-            })
+            });
     }
 
     if(loading){
@@ -84,10 +90,12 @@ const Post = () => {
                 </div>
                 {token &&
                     <div className="absolute flex right-0 top-0 p-8 gap-4 items-center">
-                        <PrimaryButton  to={`/update-post/${post.slug}`}  variant="secondary">
-                            Edit post
-                            <PencilIcon className='size-4' />
-                        </PrimaryButton>
+                        <Link  to={`/update-post/${post.slug}`}>
+                            <PrimaryButton  variant="secondary">
+                                Edit post
+                                <PencilIcon className='size-4' />
+                            </PrimaryButton>
+                        </Link>
                         <PrimaryButton onClick={() => setIsDeleting(true)}  variant="danger">
                             Delete
                             <TrashIcon className='size-4' />

@@ -1,24 +1,23 @@
-import { useRef, useState } from "react";
+import { useRef, useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "@contexts/ContextProvider";
-import axiosClient from "@/axios-client.js";
-import DabadubBox from "@assets/DabadubBox";
+import axiosClient from "@/axios-client";
 import PrimaryButton from "@components/PrimaryButton";
 import LogoDabadub from "@assets/LogoDabadub";
 
 export default function Login() {
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState<Record<string, string[]> | null>(null)
     const {setUser, setToken} = useStateContext()
 
-    const handleSubmit = (ev) => {
+    const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault()
         const payload = {
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
+            email: emailRef.current?.value || "",
+            password: passwordRef.current?.value || "",
         }
 
         setErrors(null)
@@ -55,7 +54,7 @@ export default function Login() {
                         <li key={key}>{errors[key][0]}</li>
                     ))}
                 </ul>}
-                <PrimaryButton className="ms-auto" onClick={handleSubmit} type="submit">
+                <PrimaryButton className="ms-auto" type="submit">
                     Login
                 </PrimaryButton>
                 <p className="w-full text-end">

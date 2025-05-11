@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import axiosClient from "../../axios-client";
+import axiosClient from "@/axios-client";
 import { useNavigate, Navigate } from "react-router-dom";
-import PrimaryButton from "@components/PrimaryButton";
 import { useStateContext } from "@contexts/ContextProvider";
-import PostFormNew from "@views/Posts/PostFormNew";
+import PostForm from "@/views/Posts/PostForm";
+import { Post as PostType } from "@/types";
 
 const CreateUpdatePost = () => {
     const { slug } = useParams();
@@ -14,7 +14,7 @@ const CreateUpdatePost = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
     
-    const [post, setPost] = useState({});
+    const [post, setPost] = useState<PostType | null>(null);
     const [categories, setCategories] = useState([]);
 
     if (!token) {
@@ -44,7 +44,7 @@ const CreateUpdatePost = () => {
 
         axiosClient.post(isUpdateMode ? `/posts/${slug}` :  "/posts", data)
             .then(() => {
-                setNotification(isUpdateMode ? "Post updated successfully" : "Post created successfully");
+                setNotification({message: isUpdateMode ? "Post updated successfully" : "Post created successfully", type: 'success'});
                 navigate("/posts");
             })
             .catch((err) => {
@@ -81,7 +81,7 @@ const CreateUpdatePost = () => {
                         {loading ? (
                             <div className="text-center text-primary">Loading...</div>
                         ) : (
-                            <PostFormNew
+                            <PostForm
                                 initialValues={post}
                                 onSubmit={onSubmit}
                                 isUpdateMode={isUpdateMode}

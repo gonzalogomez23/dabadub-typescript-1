@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import axiosClient from "@/axios-client.js";
-import PostItem from '/src/components/PostItem';
-import PrimaryButton from "@components/PrimaryButton";
+import axiosClient from "@/axios-client";
+import PostItem from '@components/PostItem';
+import { type Post as PostType } from "@/types";
 
 const Posts = () => {
 
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<PostType[]>([]);
     const [loading, setLoading] = useState(false);
     const { category } = useParams(); 
 
@@ -53,7 +53,6 @@ const Posts = () => {
                     No posts found in this category
                 </div>
             )}
-            {/* <div>No founded posts</div> */}
         </div>
     )
   }

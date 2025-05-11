@@ -2,14 +2,12 @@ import { createContext, useContext, useState, ReactNode } from "react";
 
 interface User {
     name: string;
-    // [key: string]: unknown;
 }
 
 interface Notification {
     message: string;
     type?: 'success' | 'error';
 };
-
 
 interface StateContextType {
     user: User | null;
@@ -23,15 +21,6 @@ interface StateContextType {
 interface ContextProviderProps {
     children: ReactNode;
 }
-
-// const StateContext = createContext<StateContextType>({
-//     user: null,
-//     token: null,
-//     notification: null,
-//     setUser: () => {},
-//     setToken: () => {},
-//     setNotification: () => {}
-// })
 
 const StateContext = createContext<StateContextType>({} as StateContextType);
 
@@ -57,8 +46,6 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
             localStorage.removeItem('ACCESS_TOKEN');
         }
     }
-
-    
 
     return (
         <StateContext.Provider value={{

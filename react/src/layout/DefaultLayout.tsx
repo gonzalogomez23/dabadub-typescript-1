@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useEffect, MouseEvent } from "react";
 import { useStateContext } from "@contexts/ContextProvider";
 import LogoDabadub from "@assets/LogoDabadub";
-import axiosClient from "@/axios-client.js";
+import axiosClient from "@/axios-client";
 import DropdownMenu from "@components/DropdownMenu";
 import { ArrowRightStartOnRectangleIcon, UserIcon, UserCircleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import PrimaryButton from "@components/PrimaryButton";
@@ -42,10 +42,12 @@ export default function DefaultLayout() {
                 </Link>
                     {token ?
                         <div className="flex gap-4 items-center">
-                            <PrimaryButton to="/new-post">
-                                New post
-                                <PencilSquareIcon className="size-5"/>
-                            </PrimaryButton>
+                            <Link to="/new-post">
+                                <PrimaryButton>
+                                    New post
+                                    <PencilSquareIcon className="size-5"/>
+                                </PrimaryButton>
+                            </Link>
                             <DropdownMenu
                                 label={user?.name || ''}
                                 buttonIcon={(
@@ -63,9 +65,11 @@ export default function DefaultLayout() {
                             </DropdownMenu>
                         </div>
                     :
-                        <PrimaryButton to="/login" variant="secondary">
-                            Login
-                        </PrimaryButton>
+                        <Link to="/login">
+                            <PrimaryButton variant="secondary">
+                                Login
+                            </PrimaryButton>
+                        </Link>
                     }
             </header>
             <main className="w-100 grow">

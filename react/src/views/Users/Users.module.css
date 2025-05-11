@@ -1,11 +1,7 @@
 .users-table{
-    width: 100%;
+    max-width: 100%;
 }
 .users-table th, .users-table td{
     text-align: start;
     padding: .5rem 1rem;
-    /* border-right: 1px solid rgb(219, 219, 219); */
 }
-/* .users-table th:last-child, .users-table td:last-child{
-    border-right: none;
-} */

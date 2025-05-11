@@ -1,19 +1,27 @@
-import { useEffect, useState } from "react"
-import axiosClient from "../../axios-client"
+import { useEffect, useState, FormEvent } from "react"
+import axiosClient from "@/axios-client"
 import { useNavigate, useParams } from "react-router-dom"
 import { useStateContext } from "@contexts/ContextProvider";
+
+interface UserDataType {
+  id: number | null;
+  name: string;
+  email: string;
+  password?: string;
+  password_confirmation?: string;
+};
 
 export default function UserForm() {
     const navigate = useNavigate();
     let {id} = useParams()
-    const [user, setUser] = useState({
+    const [user, setUser] = useState<UserDataType>({
         id: null,
         name: '',
         email: '',
         password: '',
         password_confirmation: ''
     })
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState<Record<string, string[]> | null>(null)
     const {setNotification} = useStateContext()
     const [loading, setLoading] = useState(false)
 
@@ -31,33 +39,24 @@ export default function UserForm() {
         }, [])
     }
 
-    const onSubmit = (ev) => {
+    const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
-        if(user.id) {
-            axiosClient.put(`/users/${user.id}`, user)
-                .then(() => {
-                    setNotification("User was successfully updated")
-                    navigate('/users')
-                })
-                .catch(err => {
-                    const response = err.response;
-                    if(response && response.status === 422) {
-                        setErrors(response.data.errors);
-                    }
-                })
-        } else {
-            axiosClient.post('/users', user)
-                .then(() => {
-                    setNotification("User was successfully created")
-                    navigate('/users')
-                })
-                .catch(err => {
-                    const response = err.response;
-                    if(response && response.status === 422) {
-                        setErrors(response.data.errors);
-                    }
-                })
-        }
+        const saveUser = user.id
+            ? axiosClient.put(`/users/${user.id}`, user)
+            : axiosClient.post('/users', user);
+
+        saveUser
+            .then(() => {
+                setNotification({ message: "User was successfully " + (user.id ? "updated" : "created"), type: 'success' });
+                navigate('/users');
+            })
+            .catch(err => {
+                const response = err.response;
+                if (response?.status === 422) {
+                setErrors(response.data.errors);
+                }
+            });
+
     }
 
     return (
